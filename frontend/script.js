@@ -3,7 +3,7 @@ function predict() {
     let formData = new FormData();
     formData.append("file", fileInput);
 
-    fetch("https://your-api.onrender.com/predict", {
+    fetch("https://parkinson-detection-speech.onrender.com", {
         method: "POST",
         body: formData
     })
