@@ -1,0 +1,6 @@
+flask
+joblib
+librosa
+numpy
+soundfile
+noisereduce
