@@ -5,3 +5,5 @@ numpy
 soundfile
 noisereduce
 gunicorn
+python_speech_features
+scipy
