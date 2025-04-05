@@ -80,11 +80,23 @@ def predict():
     file = request.files["file"]
     file_path = "temp.wav"
     file.save(file_path)
+
     features = extract_features(file_path)
-    features = scaler.transform(features)
-    prediction = model.predict(features)[0]
-    result = "Parkinson" if prediction == 1 else "Healthy"
+
+    if features is None:
+        return jsonify({"error": "Feature extraction failed"}), 500
+
+    try:
+        features = scaler.transform([features])  # Fix: Wrap in list
+        prediction = model.predict(features)[0]
+        result = "Parkinson" if prediction == 1 else "Healthy"
+    except Exception as e:
+        return jsonify({"error": f"Prediction failed: {str(e)}"}), 500
+    finally:
+        os.remove(file_path)
+
     return jsonify({"prediction": result})
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
